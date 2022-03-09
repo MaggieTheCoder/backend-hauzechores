@@ -49,7 +49,7 @@ describe('update users', () => {
 
         expect(result.status).to.equal(200);
         expect(updatedUser.email).to.equal('updatedemail@email.com');
-        expect(updatedUser.houseID).to.equal(4);
+        expect(updatedUser.houseID).to.equal('4');
       });
 
       it('Response should equal 404 when trying to update an artist that does not exist', async () => {

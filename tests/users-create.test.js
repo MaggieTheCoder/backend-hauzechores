@@ -26,7 +26,7 @@ describe('create user', () => {
         );
 
         expect(userEntries.email).to.equal('jenny@hotmail.com');
-        expect(userEntries.houseID).to.equal(1);
+        expect(userEntries.houseID).to.equal('1');
       });
     });
   });
