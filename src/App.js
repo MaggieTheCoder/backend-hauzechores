@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 app.use(userRouter);
 
-app.post('/users', userRouter);
+
 app.post('/houses', houseRouter)
 app.use(taskRouter);
 
