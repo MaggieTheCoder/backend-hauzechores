@@ -21,6 +21,12 @@ exports.getAll = async (req, res) => {
   const db = await getDb();
 
   try {
-    
+    const result = await db.query('SELECT * FROM Task');
+
+    const [tasks] = result;
+    res.status(200).send(tasks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
   }
 };
