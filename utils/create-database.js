@@ -25,27 +25,26 @@ const setUpDatabase = async () => {
     await db.query(`USE ${DB_NAME}`);
     await db.query(`CREATE TABLE IF NOT EXISTS User(
         id INT PRIMARY KEY auto_increment,
-        email VARCHAR(25),
+        email VARCHAR(255),
         houseID VARCHAR(25) 
     )`);
 
     await db.query(`CREATE TABLE IF NOT EXISTS Task(
       id INT PRIMARY KEY auto_increment,
-      taskname VARCHAR(25),
+      taskname VARCHAR(255),
       userID INT NOT NULL,
       houseID VARCHAR(25),
       FOREIGN KEY (userId) 
-      REFERENCES User (id)
-       
+      REFERENCES User (id)     
     )`);
     await db.query(`CREATE TABLE IF NOT EXISTS House(
       id INT PRIMARY KEY auto_increment,
-      housename VARCHAR(25),
+      housename VARCHAR(255),
       houseID INT,
       inviteCode VARCHAR(255)
        
     )`);
-    
+
     db.close();
   } catch (err) {
     console.log(

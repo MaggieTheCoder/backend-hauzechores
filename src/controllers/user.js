@@ -5,14 +5,12 @@ exports.create = async (req, res) => {
   const { email, houseID } = req.body;
 
   try {
-    await db.query('INSERT INTO User (email, houseID, VALUES (?, ?)', [
+    await db.query('INSERT INTO User (email, houseID) VALUES (?, ?)', [
       email,
       houseID,
     ]);
-    const [[createdUser]] = await db.query('SELECT * FROM User WHERE email=?', [
-      email,
-    ]);
-    res.status(201).send(createdUser);
+
+    res.sendStatus(201);
   } catch (error) {
     res.sendStatus(500).json(error);
   }
@@ -50,7 +48,7 @@ exports.getById = async (req, res) => {
   db.close();
 };
 
-exports.getUserByEmail = async (req, res)=>{
+exports.getUserByEmail = async (req, res) => {
   const db = await getDb();
   const email = req.params.email;
   try {
@@ -63,10 +61,9 @@ exports.getUserByEmail = async (req, res)=>{
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
   }
   db.close();
-}
+};
 
 exports.updateUserById = async (req, res) => {
   const db = await getDb();
