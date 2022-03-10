@@ -25,15 +25,15 @@ const setUpDatabase = async () => {
     await db.query(`USE ${DB_NAME}`);
     await db.query(`CREATE TABLE IF NOT EXISTS User(
         id INT PRIMARY KEY auto_increment,
-        email VARCHAR(25),
-        houseID VARCHAR(25) 
+        email VARCHAR(255),
+        houseID VARCHAR(255) 
     )`);
 
     await db.query(`CREATE TABLE IF NOT EXISTS Task(
       id INT PRIMARY KEY auto_increment,
-      taskname VARCHAR(25),
+      taskname VARCHAR(255),
       userID INT NOT NULL,
-      houseID VARCHAR(25),
+      houseID VARCHAR(255),
       FOREIGN KEY (userId) 
       REFERENCES User (id)
        
