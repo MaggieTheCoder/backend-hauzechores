@@ -12,19 +12,21 @@ describe('create task', () => {
     await db.close();
   });
 
-  describe('/task', () => {
+  describe('/tasks', () => {
     describe('POST', () => {
       it('creates a new task in the database', async () => {
-        const res = await (
-          await request(app).post('/task')
-        ).send({
+        const res = await request(app).post('/tasks').send({
+          userID: '1',
           taskname: 'dust the living room',
         });
+
         const taskEntry = await db.query(
           `SELECT * FROM Task WHERE taskname = 'dust the living room'`
         );
-        console.log(taskEntry);
+
         expect(res.status).to.equal(201);
+        expect(taskEntry.userID).to.equal('1');
+        expect(taskEntry.taskname).to.equal('dust the living room');
       });
     });
   });
