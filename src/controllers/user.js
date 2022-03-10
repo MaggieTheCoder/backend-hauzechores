@@ -48,6 +48,23 @@ exports.getById = async (req, res) => {
   db.close();
 };
 
+exports.getUserByEmail = async (req, res) => {
+  const db = await getDb();
+  const email = req.params.email;
+  try {
+    const result = await db.query('SELECT * FROM User WHERE email=?', [email]);
+    const [[user]] = result;
+    if (user) {
+      res.status(200).send(user);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  db.close();
+};
+
 exports.updateUserById = async (req, res) => {
   const db = await getDb();
   const id = req.params.id;
@@ -63,8 +80,7 @@ exports.updateUserById = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+    res.sendStatus(500).json(error);
   }
   db.close();
 };
