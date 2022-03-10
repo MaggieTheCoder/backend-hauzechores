@@ -9,8 +9,10 @@ exports.create = async (req, res) => {
       email,
       houseID,
     ]);
-
-    res.sendStatus(201);
+    const [[createdUser]] = await db.query('SELECT * FROM User WHERE email=?', [
+      email,
+    ]);
+    res.status(201).send(createdUser);
   } catch (error) {
     res.sendStatus(500).json(error);
   }
@@ -47,6 +49,24 @@ exports.getById = async (req, res) => {
   }
   db.close();
 };
+
+exports.getUserByEmail = async (req, res)=>{
+  const db = await getDb();
+  const email = req.params.email;
+  try {
+    const result = await db.query('SELECT * FROM User WHERE email=?', [email]);
+    const [[user]] = result;
+    if (user) {
+      res.status(200).send(user);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+  db.close();
+}
 
 exports.updateUserById = async (req, res) => {
   const db = await getDb();
