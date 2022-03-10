@@ -5,8 +5,15 @@ const getDb = require('../src/services/db');
 
 describe('create task', () => {
   let db;
-  beforeEach(async () => (db = await getDb()));
-
+  let user;
+  beforeEach(async () => {
+    db = await getDb();
+    await db.query('INSERT INTO User(email, houseID) VALUES(?,?)', [
+      'testemail@gmail.com',
+      'green-monkey-rock',
+    ]);
+    [[user]] = await db.query('SELECT * FROM User');
+  });
   afterEach(async () => {
     await db.query('DELETE FROM Task');
     await db.close();
