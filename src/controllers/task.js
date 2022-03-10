@@ -16,3 +16,11 @@ exports.create = async (req, res) => {
   }
   db.close();
 };
+
+exports.getAll = async (req, res) => {
+  const db = await getDb();
+
+  try {
+    
+  }
+};
