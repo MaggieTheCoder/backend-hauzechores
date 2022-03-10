@@ -2,12 +2,13 @@ const getDb = require('../services/db.js');
 
 exports.create = async (req, res) => {
   const db = await getDb();
-  const { email, houseID } = req.body;
+  const { housename, houseID, inviteCode } = req.body;
 
   try {
-    await db.query('INSERT INTO User (email, houseID, VALUES (?, ?)', [
-      email,
+    await db.query('INSERT INTO House (housename, houseID, inviteCode) VALUES (?, ?, ?)', [
+      housename,
       houseID,
+      inviteCode,
     ]);
 
     res.sendStatus(201);

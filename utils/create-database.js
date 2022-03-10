@@ -28,6 +28,14 @@ const setUpDatabase = async () => {
         email VARCHAR(25),
         houseID INT  
     )`);
+    await db.query(`CREATE TABLE IF NOT EXISTS House(
+      id INT PRIMARY KEY auto_increment,
+      housename VARCHAR(25),
+      houseID INT,
+      inviteCode VARCHAR(255)
+       
+    )`);
+    
     db.close();
   } catch (err) {
     console.log(
