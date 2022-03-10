@@ -21,10 +21,12 @@ describe('create user', () => {
 
         expect(res.status).to.equal(201);
 
-        const [[userEntries]] = await db.query(`SELECT * FROM User WHERE `);
+        const [[userEntries]] = await db.query(
+          `SELECT * FROM User WHERE houseID = 1`
+        );
 
         expect(userEntries.email).to.equal('jenny@hotmail.com');
-        expect(userEntries.houseID).to.equal(1);
+        expect(userEntries.houseID).to.equal('1');
       });
     });
   });
