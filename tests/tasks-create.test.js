@@ -23,16 +23,16 @@ describe('create task', () => {
     describe('POST', () => {
       it('creates a new task in the database', async () => {
         const res = await request(app).post('/tasks').send({
-          userID: '1',
+          userID: user.id,
           taskname: 'dust the living room',
         });
 
-        const taskEntry = await db.query(
+        const [[taskEntry]] = await db.query(
           `SELECT * FROM Task WHERE taskname = 'dust the living room'`
         );
 
         expect(res.status).to.equal(201);
-        expect(taskEntry.userID).to.equal('1');
+        expect(taskEntry.userID).to.equal(user.id);
         expect(taskEntry.taskname).to.equal('dust the living room');
       });
     });
