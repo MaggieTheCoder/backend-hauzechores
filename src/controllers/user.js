@@ -5,7 +5,7 @@ exports.create = async (req, res) => {
   const { email, houseID } = req.body;
 
   try {
-    await db.query('INSERT INTO User (email, houseID) VALUES (?, ?)', [
+    await db.query('INSERT INTO User (email, houseID, VALUES (?, ?)', [
       email,
       houseID,
     ]);
@@ -83,8 +83,7 @@ exports.updateUserById = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+    res.sendStatus(500).json(error);
   }
   db.close();
 };
