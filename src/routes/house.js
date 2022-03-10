@@ -7,5 +7,10 @@ const houseController = require('../controllers/house');
 const router = express.Router();
 
 router.post('/houses', houseController.create);
+router.get('/houses', houseController.getAll);
+router.get('/houses/:houseID', houseController.getById);
+router.get('/houses/:houseID', houseController.getByInvitecode);
+router.patch('/houses/:houseID', houseController.updateHouse);
+router.delete('/houses/:houseID', houseController.deleteHouse);
 
 module.exports = router;

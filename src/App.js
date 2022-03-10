@@ -10,7 +10,7 @@ app.use(cors());
 app.use(userRouter);
 
 app.post('/users', userRouter);
-app.post('/houses', houseRouter)
+app.use(houseRouter)
 app.use(taskRouter);
 
 app.get('/test', (req, res) => {
