@@ -8,10 +8,8 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 app.use(userRouter);
-
-app.post('/users', userRouter);
-app.use(houseRouter)
 app.use(taskRouter);
+app.use(houseRouter);
 
 app.get('/test', (req, res) => {
   res.status(200).send('Hello World');

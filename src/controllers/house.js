@@ -5,12 +5,11 @@ const getDb = require('../services/db.js');
 
 exports.create = async (req, res) => {
   const db = await getDb();
-  const { housename, houseID, inviteCode } = req.body;
+  const { housename, inviteCode } = req.body;
 
   try {
-    await db.query('INSERT INTO House (housename, houseID, inviteCode) VALUES (?, ?, ?)', [
+    await db.query('INSERT INTO House (housename, inviteCode) VALUES (?, ?)', [
       housename,
-      houseID,
       inviteCode,
     ]);
 
@@ -60,10 +59,10 @@ exports.getAll = async (req, res) => {
 
     exports.getByInvitecode = async (req, res) => {
     const db = await getDb();
-    const houseID = req.params.houseID;
+    const inviteCode = req.params.invitecode;
     
     try {
- const [[house]] = await db.query('SELECT * FROM House WHERE inviteCode = ?', [houseID]);
+ const [[house]] = await db.query('SELECT * FROM House WHERE inviteCode = ?', [inviteCode]);
 
       if(!house) {
         
