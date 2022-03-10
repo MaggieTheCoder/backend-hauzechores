@@ -40,7 +40,6 @@ const setUpDatabase = async () => {
     await db.query(`CREATE TABLE IF NOT EXISTS House(
       id INT PRIMARY KEY auto_increment,
       housename VARCHAR(255),
-      houseID INT,
       inviteCode VARCHAR(255)
        
     )`);
