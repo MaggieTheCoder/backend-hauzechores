@@ -43,14 +43,15 @@ describe('read tasks', () => {
     describe('GET', () => {
       it('returns all tasks in the database', async () => {
         const result = await request(app).get('/tasks');
-        console.log({ result });
-        expect(result.status).to.equal(404);
 
-        // result.body.forEach((task) => {
-        //   const fromTests = tasks.find((test) => {
-        //     return test.id === task.id;
-        //   });
-        // expect(task).to.deep.equal(fromTests);
+        expect(result.status).to.equal(200);
+
+        result.body.forEach((task) => {
+          const fromTests = tasks.find((test) => {
+            return test.id === task.id;
+          });
+          expect(task).to.deep.equal(fromTests);
+        });
       });
     });
   });
