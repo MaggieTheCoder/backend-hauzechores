@@ -54,5 +54,16 @@ describe('read tasks', () => {
         });
       });
     });
+
+    describe('/tasks/:userid', () => {
+      it('should return a single user with the correct ID', async () => {
+        const expectedUser = tasks[0];
+        console.log({ expectedUser });
+        const expectedUserId = expectedUser.userID;
+        console.log({ expectedUserId });
+        const result = await request(app).get(`/tasks/userid/1`);
+        expect(result.status).to.equal(200);
+      });
+    });
   });
 });

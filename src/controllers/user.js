@@ -141,6 +141,6 @@ exports.deleteById = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
-    db.close();
   }
+  db.close();
 };
