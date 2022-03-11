@@ -41,7 +41,6 @@ const setUpDatabase = async () => {
       id INT PRIMARY KEY auto_increment,
       housename VARCHAR(255),
       inviteCode VARCHAR(255)
-       
     )`);
 
     db.close();
