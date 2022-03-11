@@ -17,31 +17,31 @@ exports.create = async (req, res) => {
   db.close();
 };
 
-// exports.getAll = async (req, res) => {
-//   const db = await getDb();
+exports.getAll = async (req, res) => {
+  const db = await getDb();
 
-//   try {
-//     const result = await db.query('SELECT * FROM Task');
+  try {
+    const result = await db.query('SELECT * FROM Task');
 
-//     const [tasks] = result;
-//     res.status(200).send(tasks);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json(error);
-//   }
-// };
+    const [tasks] = result;
+    res.status(200).send(tasks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
 
 exports.getTaskByUserId = async (req, res) => {
   const db = await getDb();
-  const userID = req.params.userID;
+  const userID = req.params.userid;
 
   try {
-    const result = await db.query('SELECT * FROM Task WHERE userid=?', [
+    const result = await db.query('SELECT * FROM Task WHERE userID=?', [
       userID,
     ]);
-    console.log({ userID });
+
     const [[task]] = result;
-    console.log({ task });
+
     if (task) {
       res.status(200).send(task);
     } else {
