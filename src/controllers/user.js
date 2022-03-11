@@ -85,6 +85,48 @@ exports.updateUserById = async (req, res) => {
   db.close();
 };
 
+exports.updateUserByEmail = async (req, res) => {
+  const db = await getDb();
+  const email = req.query.email;
+  const data = req.body;
+
+  try {
+    const [[user]] = await db.query('SELECT * FROM User WHERE email=?', [
+      email,
+    ]);
+    if (user) {
+      await db.query('UPDATE User SET ? WHERE email=?', [data, email]);
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
+
+exports.getByEmail = async (req, res) => {
+  const db = await getDb();
+  const email = req.query.email;
+  console.log(email);
+
+  try {
+    console.log(email);
+    const result = await db.query('SELECT * FROM User WHERE email=?', [email]);
+    const [[user]] = result;
+    if (user) {
+      res.status(200).send(user);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+  db.close();
+};
+
 exports.deleteById = async (req, res) => {
   const db = await getDb();
   const id = req.params.id;
