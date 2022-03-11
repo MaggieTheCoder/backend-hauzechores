@@ -32,7 +32,7 @@ const setUpDatabase = async () => {
     await db.query(`CREATE TABLE IF NOT EXISTS Task(
       id INT PRIMARY KEY auto_increment,
       taskname VARCHAR(255),
-      userID INT NOT NULL,
+      userID INT,
       houseID VARCHAR(255)
          
     )`);
