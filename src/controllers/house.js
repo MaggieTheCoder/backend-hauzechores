@@ -1,130 +1,124 @@
 const getDb = require('../services/db.js');
 
-
 /// CREATE HOUSE
 
 exports.create = async (req, res) => {
   const db = await getDb();
-  const { housename, inviteCode } = req.body;
+  const { housename, invitecode } = req.body;
 
   try {
     await db.query('INSERT INTO House (housename, inviteCode) VALUES (?, ?)', [
       housename,
-      inviteCode,
+      invitecode,
     ]);
 
-    res.sendStatus(201);
+    res.status(201).json('created');
   } catch (error) {
     res.sendStatus(500).json(error);
   }
   db.close();
 };
 
-
-//// READ ALL HOUSES 
+//// READ ALL HOUSES
 
 exports.getAll = async (req, res) => {
   const db = await getDb();
   try {
     const [houses] = await db.query('SELECT * FROM House');
     res.status(200).json(houses);
-  }catch(error) {
+  } catch (error) {
     res.status(500).json(error);
   }
   db.close();
-  };
+};
 
+//// READ HOUSE BY ID
 
-//// READ HOUSE BY ID 
+exports.getById = async (req, res) => {
+  const db = await getDb();
+  const { houseID } = req.params;
 
-  exports.getById = async (req, res) => {
-    const db = await getDb();
-    const {houseID} = req.params;
-     
-    try {
-      const [[house]] = await db.query('SELECT * FROM House WHERE id = ?', [houseID]);
-      if(!house) {
-        res.sendStatus(404);
-      }else {
-        res.status(200).json(house);
-      }
-    } catch (error) 
-    {
-      res.status(500).json(error);
+  try {
+    const [[house]] = await db.query('SELECT * FROM House WHERE id = ?', [
+      houseID,
+    ]);
+    if (!house) {
+      res.sendStatus(404);
+    } else {
+      res.status(200).json(house);
     }
-      db.close();
-  };
+  } catch (error) {
+    res.status(500).json(error);
+  }
+  db.close();
+};
 
-  //// READ HOUSE BY INVITECODE
+//// READ HOUSE BY INVITECODE
 
-    exports.getByInvitecode = async (req, res) => {
-    const db = await getDb();
-    const inviteCode = req.params.invitecode;
-    
-    try {
- const [[house]] = await db.query('SELECT * FROM House WHERE inviteCode = ?', [inviteCode]);
+exports.getByInvitecode = async (req, res) => {
+  const db = await getDb();
+  const inviteCode = req.params.invitecode;
 
-      if(!house) {
-        
-        res.sendStatus(404);
-      }else {
-        res.status(200).json(house);
-      }
-    } catch (error) 
-    {
-      console.log(error);
-      res.status(500).json(error);
+  try {
+    const [[house]] = await db.query(
+      'SELECT * FROM House WHERE inviteCode = ?',
+      [inviteCode]
+    );
+
+    if (!house) {
+      res.sendStatus(404);
+    } else {
+      res.status(200).json(house);
     }
-    };
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
 
-  //// UPDATE 
+//// UPDATE
 
-    exports.updateHouse = async (req, res) => {
-      const db = await getDb();
-      const houseID = req.params.houseID;
-      const data = req.body;
-    
-      try {
-        const [[house]] = await db.query('SELECT * FROM House WHERE id = ?', [houseID]);
-    
-        if (!house) {
-          res.sendStatus(404);
-        } else {
-          await db.query('UPDATE House SET ? WHERE id = ?', [data, houseID]);
-          res.status(200).json(house);
-        }
-      } catch (err) {
-        res.status(500).send('error here');
-      }
-      db.close();
-    };
+exports.updateHouse = async (req, res) => {
+  const db = await getDb();
+  const houseID = req.params.houseID;
+  const data = req.body;
 
+  try {
+    const [[house]] = await db.query('SELECT * FROM House WHERE id = ?', [
+      houseID,
+    ]);
 
-     //// DELETE  
-     
+    if (!house) {
+      res.sendStatus(404);
+    } else {
+      await db.query('UPDATE House SET ? WHERE id = ?', [data, houseID]);
+      res.status(200).json(house);
+    }
+  } catch (err) {
+    res.status(500).send('error here');
+  }
+  db.close();
+};
+
+//// DELETE
+
 exports.deleteHouse = async (req, res) => {
   const db = await getDb();
   const houseID = req.params.houseID;
 
+  try {
+    const [[house]] = await db.query('SELECT * FROM House WHERE id = ?', [
+      houseID,
+    ]);
 
-      try {
-        const [[house]] = await db.query('SELECT * FROM House WHERE id = ?', [houseID]);
-    
-        if (!house) {
-          res.sendStatus(404);
-        } else {
-          await db.query('DELETE FROM House WHERE id = ?', [houseID]);
-          res.status(200)
-            .json("deleted");
-        }
-      } catch (err) {
-        res.status(500).send();
-      }
-      db.close();
-    };
-
-
-
-
-
-
+    if (!house) {
+      res.sendStatus(404);
+    } else {
+      await db.query('DELETE FROM House WHERE id = ?', [houseID]);
+      res.status(200).json('deleted');
+    }
+  } catch (err) {
+    res.status(500).send();
+  }
+  db.close();
+};
