@@ -33,9 +33,8 @@ const setUpDatabase = async () => {
       id INT PRIMARY KEY auto_increment,
       taskname VARCHAR(255),
       userID INT NOT NULL,
-      houseID VARCHAR(255),
-      FOREIGN KEY (userId) 
-      REFERENCES User (id)     
+      houseID VARCHAR(255)
+         
     )`);
     await db.query(`CREATE TABLE IF NOT EXISTS House(
       id INT PRIMARY KEY auto_increment,
