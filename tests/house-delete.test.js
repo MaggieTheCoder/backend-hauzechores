@@ -10,9 +10,9 @@ describe('delete house', () => {
     beforeEach(async ()=> {
         db = await getDb();
         await Promise.all([ 
-         db.query("INSERT INTO House (housename, inviteCode) VALUES(?, ?)" , ["Maggieshouse", "randomgeneratedword1"]),
-         db.query("INSERT INTO House (housename, inviteCode) VALUES(?, ?)" , ["Rachelshouse", "randomgeneratedword2"]),
-         db.query("INSERT INTO House (housename, inviteCode) VALUES(?, ?)", ["Mariashouse", "randomgeneratedword3"]),
+         db.query("INSERT INTO House (housename, invitecode) VALUES(?, ?)" , ["Maggieshouse", "randomgeneratedword1"]),
+         db.query("INSERT INTO House (housename, invitecode) VALUES(?, ?)" , ["Rachelshouse", "randomgeneratedword2"]),
+         db.query("INSERT INTO House (housename, invitecode) VALUES(?, ?)", ["Mariashouse", "randomgeneratedword3"]),
         ]);
 [houses] = await db.query("SELECT * FROM House");
     });
@@ -20,19 +20,17 @@ describe('delete house', () => {
         await db.query('DELETE FROM House');
         await db.close();
     });
-    describe('/houses/:houseID', ()=> {
-        describe('DELETE', () => {
-            it('deletes a house with the correct id', async ()=> {
-                const house = houses[0];
-                const houseToDelete =house.houseID;
-                const res = await request(app).delete(`/houses/${houseToDelete}`).send();
-                
-                const [[deletedHouse]] = await db.query("SELECT * FROM House WHERE id = ?", [house.houseID]);
-                expect(res.status).to.equal(200);
-                expect(!!deletedHouse).to.be.false;
+    
+    describe('DELETE /houses/:houseID', () => {
+        it('deletes house record by id', async () => {
+            const house = houses[0];
+            const response = await request(app).delete(`/houses/${house.id}`);
+            const [[deletedHouse]] = await db.query("SELECT * FROM House WHERE id = ?", [house.houseID]);
 
-            })
-        })
-    })
+            expect(response.status).to.equal(200);
+        expect(Boolean(deletedHouse)).to.be.false;
+        });
+    });
+    
 });
 

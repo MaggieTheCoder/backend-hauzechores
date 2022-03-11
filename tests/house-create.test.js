@@ -17,7 +17,7 @@ describe('create house', () => {
 it("creates a new house in the database", async () => {
     const res = await request(app).post('/houses').send({
         housename: "coding house",
-      inviteCode: "random-word-generated"
+      invitecode: "random-word-generated"
     });
     expect(res.status).to.equal(201);
     const [[houseEntries]] = await db.query(`SELECT * FROM House WHERE housename = "coding house" `);
