@@ -42,6 +42,16 @@ const setUpDatabase = async () => {
       inviteCode VARCHAR(255)
     )`);
 
+
+    await db.query(`CREATE TABLE IF NOT EXISTS Scoreboard(
+      id INT PRIMARY KEY auto_increment,
+      score INT,
+      username VARCHAR(255),
+      userID INT NOT NULL,
+      houseID VARCHAR(255)   
+
+    )`);
+
     db.close();
   } catch (err) {
     console.log(
