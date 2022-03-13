@@ -82,8 +82,32 @@ exports.deleteById = async (req, res) => {
     const [[task]] = await db.query('SELECT * FROM Task WHERE id=?', [id]);
 
     if (task) {
-      await db.query('DELETE FROM Task WHERE id=?'[id]);
+      console.log(task);
+      await db.query('DELETE FROM Task WHERE id=?', [id]);
       res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+  db.close();
+};
+
+exports.getByQuery = async (req, res) => {
+  const db = await getDb();
+  console.log(req.query);
+  const [q] = Object.keys(req.query);
+  console.log(q);
+  const [value] = Object.values(req.query);
+  console.log(value);
+
+  try {
+    const result = await db.query(`SELECT * FROM Task WHERE ${q}=?`, [value]);
+    const [task] = result;
+    if (task) {
+      res.status(200).send(task);
     } else {
       res.sendStatus(404);
     }
