@@ -106,14 +106,18 @@ exports.updateUserByEmail = async (req, res) => {
   }
 };
 
-exports.getByEmail = async (req, res) => {
+exports.getByQuery = async (req, res) => {
   const db = await getDb();
-  const email = req.query.email;
-  console.log(email);
+  // const email = req.query.email;
+  // console.log(email);
+  console.log(req.query);
+  const [q] = Object.keys(req.query);
+  console.log(q);
+  const [value] = Object.values(req.query);
+  console.log(value);
 
   try {
-    console.log(email);
-    const result = await db.query('SELECT * FROM User WHERE email=?', [email]);
+    const result = await db.query(`SELECT * FROM User WHERE ${q}=?`, [value]);
     const [[user]] = result;
     if (user) {
       res.status(200).send(user);
