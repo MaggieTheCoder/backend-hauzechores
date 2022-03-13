@@ -108,8 +108,6 @@ exports.updateUserByEmail = async (req, res) => {
 
 exports.getByQuery = async (req, res) => {
   const db = await getDb();
-  // const email = req.query.email;
-  // console.log(email);
   console.log(req.query);
   const [q] = Object.keys(req.query);
   console.log(q);

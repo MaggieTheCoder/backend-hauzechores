@@ -13,7 +13,7 @@ describe('read tasks', () => {
     //create a user
     await db.query('INSERT INTO User(email, houseID) VALUES(?,?)', [
       'testemail@gmail.com',
-      'green-monkey-rock',
+      4,
     ]);
     [[user]] = await db.query('SELECT * FROM User');
     //create some tasks :)
@@ -57,11 +57,11 @@ describe('read tasks', () => {
 
     describe('/tasks/:userid', () => {
       it('should return a single user with the correct ID', async () => {
-        const expectedUser = tasks[0];
-        console.log({ expectedUser });
-        const expectedUserId = expectedUser.userID;
-        console.log({ expectedUserId });
-        const result = await request(app).get(`/tasks/userid/1`);
+        const expectedUser = user;
+        const expectedUserId = expectedUser.id;
+        const result = await request(app).get(
+          `/tasks/userid/${expectedUserId}`
+        );
         expect(result.status).to.equal(200);
       });
     });

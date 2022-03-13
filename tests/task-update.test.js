@@ -36,18 +36,19 @@ describe('update tasks', () => {
     describe('PATCH', () => {
       it('updates a single task with the correct id', async () => {
         const task = tasks[0];
+        console.log(task);
 
         const res = await request(app)
           .patch(`/tasks/${task.id}`)
-          .send({ taskname: 'water the plants' });
-
+          .send({ userID: 2 });
         expect(res.status).to.equal(200);
 
-        const [[newTaskRecord]] = await db.query(
-          'SELECT * FROM TASK WHERE id = ?'[task.id]
-        );
+        const [[fromDb]] = await db.query('SELECT * FROM Task WHERE id=?', [
+          task.id,
+        ]);
 
-        expect(newTaskRecord.name).to.equal('water the plants');
+        console.log(fromDb);
+        expect(fromDb.userID).to.equal(2);
       });
 
       it('returns a 404 if the task is not in the database', async () => {
