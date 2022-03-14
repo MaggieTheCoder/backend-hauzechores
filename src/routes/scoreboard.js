@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/scoreboard', scoreboardController.create);
 router.get('/scoreboard', scoreboardController.getAllScores);
-router.patch('/scoreboard/:id', scoreboardController.updateScore);
+router.get('/query/scoreboard/', scoreboardController.getByQuery);
+router.patch('/scoreboard/:userid', scoreboardController.updateScore);
 
 module.exports = router;
